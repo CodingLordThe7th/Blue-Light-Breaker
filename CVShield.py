@@ -5,9 +5,9 @@ import random
 from datetime import timedelta
 
 
-class BlueLightBreaker(rumps.App):
+class CVShield(rumps.App):
     def __init__(self):
-        super().__init__("😎 Blue Light Breaker - Inactive")
+        super().__init__("😎 CVShield - Inactive")
         self.icon = None
         self.start_time = None
         self.break_interval = timedelta(minutes=20)  # Default: 20 minutes
@@ -32,13 +32,13 @@ class BlueLightBreaker(rumps.App):
         self.is_monitoring = True
         self.sent_notification = False
         self.timer.start()
-        self.title = "😎 Blue Light Breaker - Monitoring..."
+        self.title = "😎 CVShield - Monitoring..."
         self.stop_monitoring_button.set_callback(self.stop_monitoring)  # Enable stop button
 
     def stop_monitoring(self, _):
         self.is_monitoring = False
         self.timer.stop()
-        self.title = "😎 Blue Light Breaker - Inactive"
+        self.title = "😎 CVShield - Inactive"
         self.stop_monitoring_button.set_callback(None)  # Disable stop button
 
     def monitor_screen_time(self, _):
@@ -55,7 +55,7 @@ class BlueLightBreaker(rumps.App):
         # Display remaining time in countdown format
         minutes = int(remaining_time // 60)
         seconds = int(remaining_time % 60)
-        self.title = f"😎 Blue Light Breaker - Time until break: {minutes}m {seconds}s"
+        self.title = f"😎 CVShield - Time until break: {minutes}m {seconds}s"
 
         # Notify 10 seconds before the break
         if remaining_time <= 10 and not self.sent_notification:
@@ -68,13 +68,13 @@ class BlueLightBreaker(rumps.App):
 
     def start_break(self):
         self.timer.stop()  # Pause the timer
-        self.title = "😎 Blue Light Breaker - Break!"
+        self.title = "😎 CVShield - Break!"
         self.sent_notification = False  # Reset the notification flag for the next cycle
         self.select_random_pun()  # Pick a random pun for this break
         self.block_screen_for_break(self.break_duration)
         self.start_time = time.time()  # Reset the work timer
         self.timer.start()  # Resume the timer
-        self.title = "😎 Blue Light Breaker - Monitoring..."
+        self.title = "😎 CVShield - Monitoring..."
         rumps.notification(  # Notification for break end
             title="Break Over",
             subtitle="Back to work!",
@@ -228,4 +228,4 @@ class BlueLightBreaker(rumps.App):
 
 
 if __name__ == "__main__":
-    BlueLightBreaker().run()
+    CVShield().run()
